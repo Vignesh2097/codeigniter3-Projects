@@ -1,0 +1,19 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class datas_model extends CI_Model {
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->database();
+    }
+
+    public function get_data() {
+        // Fetch data from your database and return as an array of objects
+        $this->db->select('id, name, date_field'); // Replace 'id', 'name', 'date_field' with your actual column names
+        $this->db->from('your_table_name'); // Replace 'your_table_name' with your actual table name
+        $query = $this->db->get();
+        return $query->result();
+    }
+}
+?>
