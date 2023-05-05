@@ -1,0 +1,31 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class DataTableController extends CI_Controller {
+
+    public function __construct() {
+        parent::__construct();
+        // Load necessary libraries and models
+        $this->load->database();
+        $this->load->library('datatables');
+        $this->load->model('datatable_model'); // Replace 'datatable_model' with your actual model name
+    }
+
+    public function index() {
+        $this->load->view('datatable_view');
+    }
+
+    public function get_data() {
+        // Get data from model
+        $data = $this->datatable_model->get_data();
+
+        // Modify date format
+        foreach($data as &$row) {
+            $row->date_field = date('Y-m-d', strtotime($row->date_field));
+        }
+
+        // Return data as JSON
+        echo json_encode($data);
+    }
+}
+?>
