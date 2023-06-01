@@ -89,11 +89,27 @@ width:10%;
 #records tbody,td{
     font-weight:normal;
 	color:white;
-	font-size:100%;
+	font-size:85%;
 	padding:10px;
 	height:30px;
 	width:10%;
  }
+ #data{
+	border:1px solid white;
+	border-collapse:collapse;
+	padding:40px;
+	width:10%;
+	background-color:rgb(238, 130, 238);
+	text-align:center;
+}
+#data tbody,td{
+    font-weight:normal;
+	color:black;
+	font-size:85%;
+	padding:10px;
+	height:30px;
+	width:10%;
+}
 </style>
 <body>
 <form>
@@ -127,11 +143,23 @@ width:10%;
 <thead>
 <tr>
 <th>Employee_name</th>
-<th>Employee_designation</th>
-<th>Salary</th>
 </tr>
 </thead>
 <tbody id="records">                    
+</tbody>
+</table>
+<table class="table table-striped" id="List">
+<thead>
+<tr>
+<th>Employee_designation</th>
+<tbody id="data">                    
+</tbody>
+</table>
+<table class="table table-striped" id="List">
+<thead>
+<tr>
+<th>Salary</th>
+<tbody id="detail">                    
 </tbody>
 </table>
 </div>
@@ -139,27 +167,97 @@ width:10%;
 <script>
 $(function() {  
     $("#draggable1").draggable({helper:"clone"});
-	$("#draggable2").draggable({helper:"clone"});
-	$("#draggable3").draggable({helper:"clone"});
-	
          $("#columns").droppable({  
             accept:"#draggable1",  
-            drop: function(event,ui) {  
-               $(this).addClass("ui-state-highlight").find("p").html("Columns").css("color","red");  
+            drop: function(event,ui,data) {  
+               $(this).addClass("ui-state-highlight").find("p").html("Columns").css("color","red");
+			   var employeename=$(this).val();
+
+		$.ajax({
+			url:"<?=site_url('dragcontroller/names')?>",//Shorthand php
+            method:'post',
+            data:{Employee_name:employeename},//{column name:variable name that we give}
+            dataType:'json',
+            success: function(data){
+			var html='';
+			var i='';
+			for(i=0;i<data.length;i++){
+				html +=  '<tr id="'+data[i].id+'">'+
+						'<td>'+data[i].Employee_name+'</td>'+
+						'</tr>';
+			}
+			$('#records').html(html);					
+		}
+	});
+			   
 			}
 		 });
-		 
+
+$("#draggable2").draggable({helper:"clone"});		 
 $("#rows").droppable({  
             accept:"#draggable2",  
             drop: function(event,ui) {  
                $(this).addClass("ui-state-highlight").find("p").html("Rows").css("color","red");  
-            }  
-         });
+             var employeedes=$(this).val();
+
+		$.ajax({
+			url:"<?=site_url('dragcontroller/designation')?>",//Shorthand php
+            method:'post',
+            data:{Employee_designation:employeedes},//{column name:variable name that we give}
+            dataType:'json',
+            success: function(data){
+			var html='';
+			var i='';
+			for(i=0;i<data.length;i++){
+				html +=  '<tr id="'+data[i].id+'">'+
+						'<td>'+data[i].Employee_designation+'</td>'+
+						'</tr>';
+			}
+			$('#data').html(html);					
+		}
+	});
+			   
+			}
+		 });
+
+$("#draggable3").draggable({helper:"clone"});
 $("#values").droppable({  
             accept:"#draggable3",  
             drop: function(event,ui,data) {  
-               $(this).addClass("ui-state-highlight").find("p").html("Values").css("color","red");  
-			   var employeename=$(this).val();
+               $(this).addClass("ui-state-highlight").find("p").html("Values").css("color","red"); 
+           var salary=$(this).val();
+
+		$.ajax({
+			url:"<?=site_url('dragcontroller/salary')?>",//Shorthand php
+            method:'post',
+            data:{Salary:salary},//{column name:variable name that we give}
+            dataType:'json',
+            success: function(data){
+			var html='';
+			var i='';
+			for(i=0;i<data.length;i++){
+				html +=  '<tr id="'+data[i].id+'">'+
+						'<td>'+data[i].Salary+'</td>'+
+						'</tr>';
+			}
+			$('#detail').html(html);					
+		}
+	});			   
+			  
+				
+}
+});
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+<!--var employeename=$(this).val();
 			   var employeedes=$(this).val();
 			   var salary=$(this).val();
 		$.ajax({
@@ -181,11 +279,5 @@ $("#values").droppable({
 			$('#records').html(html);					
 		}
 	});
-				}		
-				
-});
-			});
-</script>
-</body>
-</html>
+				}		-->
 
