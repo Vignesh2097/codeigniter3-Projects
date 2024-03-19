@@ -28,16 +28,16 @@ class ticketing_model extends CI_Model{
 	public function getUser($email){
 		return $this->db->where('email',$email)->get('hd_registration')->row();
 	}
-	
 		
 	public function save($date,$requester,$remail,$contact,$cemail,$type,$status,$subject,$message,$additional)
 	{
-		$query="insert into all_complaint values('','$date','$requester','$remail','$contact','$cemail','$type','$status','$subject','$message','$additional')";
-	$this->db->query($query);
+			$query="insert into all_complaint values('','$date','$requester','$remail','$contact','$cemail','$type','$status','$subject','$message','$additional')";
+			$this->db->query($query);
 	}
+
 	public function gettickets()
     {
-		$this->db->select('ticket_no, raised_date, requester, remail, contact,cemail,request_type, status, subject, message,additional_message');
+		$this->db->select('ticket_no,raised_date,requester,remail,contact,cemail,request_type,status,subject,message,additional_message');
         $query = $this->db->get('all_complaint');
         return $query->result_array();
     }
@@ -50,5 +50,4 @@ class ticketing_model extends CI_Model{
 		
 	}
 }
-		
 ?>
