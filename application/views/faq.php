@@ -42,23 +42,7 @@ margin-left:250px;
 padding: 20px;
 margin-left:-250px;
 }
-.hamburger {
-cursor: pointer;
-padding: 10px;
-top: 20px;
-left: 20px;
-z-index: 999;
-color:yellow;
-}
-.hamburger span {
-display: block;
-width: 30px;
-height: 3px;
-background-color:yellow;
-}
-.hamburger.open {
-display: none;
-}
+
 .content-align-wrapper {
 position: fixed;
 top: 20px;
@@ -67,8 +51,8 @@ left: 500px;
 h1{
 animation-duration:1s;
 animation-name:slideup;
-margin-top:5px;
-color:yellow;
+margin-top:20px;
+color:Tomato;
 }
 @keyframes slideup{
 	from{
@@ -78,15 +62,12 @@ color:yellow;
 		margin-top:20px;
 	}
 }
-body{
-background:url(<?php echo base_url('assets/HelpDesk/Background.png');?>)no-repeat center fixed;
-background-size:cover;
-}
+
 p{
-color:rgb(130, 255, 0);
+color:#0000ff;
 }
 h3{
-color:hsl(177, 100%, 100%);
+color:#ff0000;
 }	
 img{
 width:50px;
@@ -96,17 +77,6 @@ margin-left:20px;
 </style>
 </head>
 <body>
-<div class="hamburger" onclick="toggleSidebar()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-<div class="sidebar" id="sidebar">
-<img src="<?php echo base_url('assets/HelpDesk/desk.png'); ?>" /><br>
-    <a href="<?=base_url('ticketing/index')?>">Home</a>
-    <a href="<?=base_url('ticketing/register')?>">Raise Ticket</a>
-	<a href="<?=base_url('ticketing/faq')?>">FAQ'S</a>
-  </div>
 <div class="content-wrapper" id="content-wrapper">
     <div class="content-align-wrapper">
       <div class="content" id="content">
@@ -122,19 +92,5 @@ margin-left:20px;
 </div>
 </div>
 </div>
-<script>
-    function toggleSidebar() {
-      $("#sidebar").toggleClass("show");
-      $("#content-wrapper").toggleClass("move-right");
-      $(".hamburger").toggleClass("open");
-    }
-    $(document).on("click", function(event) {
-      if (!$(event.target).closest(".hamburger, #sidebar").length) {
-        if ($("#sidebar").hasClass("show")) {
-          toggleSidebar();
-        }
-      }
-    });
-  </script>
 </body>
 </html>
